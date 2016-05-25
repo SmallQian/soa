@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+                        http://cxf.apache.org/jaxws  
+                        http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>  
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />  
+	
+	<bean id="helloWorldImpl" class="cn.com.jandar.soa.hello.impl.HelloServiceImpl" />
+	<bean id="licenseInInterceptor" class="cn.com.jandar.interceptor.LicenseInInterceptor" />
+
+    <!-- 2:通过jaxws:server方式来配置webservice -->
+    <jaxws:server serviceClass="cn.com.jandar.soa.hello.HelloService"
+        address="/sayHello">
+        <jaxws:serviceBean>
+            <ref bean="helloWorldImpl" />
+        </jaxws:serviceBean>
+        <jaxws:inInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
+            <ref bean="licenseInInterceptor"/>  
+        </jaxws:inInterceptors>  
+        <jaxws:outInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
+        </jaxws:outInterceptors> 
+    </jaxws:server>
+</beans> 
