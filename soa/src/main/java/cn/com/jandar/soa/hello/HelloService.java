@@ -13,6 +13,6 @@ import javax.jws.WebService;
 @WebService(targetNamespace="http://jandar.com.cn/soa")  
 public interface HelloService {  
     @WebMethod  
-    @WebResult(name="sayHelloResult")  
+    @WebResult(name="sayHelloResult")
     public String sayHello(@WebParam(name="name")String name);  
 }  

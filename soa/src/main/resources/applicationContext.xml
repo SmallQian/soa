@@ -13,20 +13,35 @@
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />  
 	
 	<bean id="helloWorldImpl" class="cn.com.jandar.soa.hello.impl.HelloServiceImpl" />
-	<bean id="licenseInInterceptor" class="cn.com.jandar.interceptor.LicenseInInterceptor" />
-
-    <!-- 2:通过jaxws:server方式来配置webservice -->
-    <jaxws:server serviceClass="cn.com.jandar.soa.hello.HelloService"
-        address="/sayHello">
+    <bean id="vehicleAlarmSoapImp" class="cn.com.jandar.soa.xwsoa.impl.VehicleAlarmSoapImpl" />
+	<bean id="licenseServiceImpl" class="cn.com.jandar.soa.mongoService.impl.LicenseServiceImpl" />
+	<bean id="HTSAPServerImpl" class="cn.com.jandar.soa.htService.impl.HTSAPServerImpl" />
+	<!-- 2:通过jaxws:server方式来配置webservice -->
+	<jaxws:server serviceClass="cn.com.jandar.soa.hello.HelloService"
+		address="/sayHello">
+		<jaxws:serviceBean>
+			<ref bean="helloWorldImpl" />
+		</jaxws:serviceBean>
+	</jaxws:server>
+	<jaxws:server serviceClass="cn.com.jandar.soa.htService.HTSAPServer"
+		address="/login">
+		<jaxws:serviceBean>
+			<ref bean="HTSAPServerImpl" />
+		</jaxws:serviceBean>
+	</jaxws:server>
+	<jaxws:server serviceClass="cn.com.jandar.soa.mongoService.LicenseService"
+		address="/insertVehicle">
+		<jaxws:serviceBean>
+			<ref bean="licenseServiceImpl" />
+		</jaxws:serviceBean>
+	</jaxws:server>
+    
+    <!-- xwsoa -->
+    <jaxws:server serviceClass="cn.com.jandar.soa.xwsoa.VehicleAlarmSoap"
+        address="/insertVehicleAlarm">
         <jaxws:serviceBean>
-            <ref bean="helloWorldImpl" />
+            <ref bean="vehicleAlarmSoapImp"/>
         </jaxws:serviceBean>
-        <jaxws:inInterceptors>  
-            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
-            <ref bean="licenseInInterceptor"/>  
-        </jaxws:inInterceptors>  
-        <jaxws:outInterceptors>  
-            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
-        </jaxws:outInterceptors> 
     </jaxws:server>
+    
 </beans> 
