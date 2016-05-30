@@ -1,6 +1,7 @@
 package cn.com.jandar.soa.xwsoa;
 
 import javax.jws.WebMethod;
+
 import javax.jws.WebResult;
 import javax.jws.WebService;
 

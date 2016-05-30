@@ -1,38 +1,45 @@
 package cn.com.jandar.soa.htService.impl;
 
 import javax.jws.WebService;
-import javax.xml.ws.handler.MessageContext;
+
+
 
 import org.springframework.stereotype.Service;
 
 import cn.com.jandar.soa.htService.HTSAPServer;
+import cn.com.jandar.soa.htService.NWriteVehicleInfo;
 
 @WebService(endpointInterface="cn.com.jandar.soa.htService.HTSAPServer", targetNamespace="http://jandar.com.cn/soa") 
 @Service  
 public class HTSAPServerImpl implements HTSAPServer{
-	
-	public HTSAPServerImpl() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public HTSAPServerImpl(String url){
-		
+
+	@Override
+	public String login(String strDeviceId, String strDeviceKey) {
+		String str = "00001";
+		return str;
 	}
 
 	@Override
-	public String login(String name) {
+	public String writeVehicleInfo(NWriteVehicleInfo vehicleInfo) {
 		
-		return null;
+		String str = "0000";
+		return str;
 	}
 
-	public String nWriteVehicleInfo(String vehicleInfo) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public String queryViolateSpeed(String sid, String lpszDeviceId, String lpszDiretId, String lpszCarType) {
+
+		String str = null;
+		if(lpszCarType.equals("0")){
+			str = "1";
+			
+		}else{
+			str = "0";
+		}
+		
+		return str;
 	}
 
-	public String queryViolateSpeed(String queryViolateSpeed34) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
 }

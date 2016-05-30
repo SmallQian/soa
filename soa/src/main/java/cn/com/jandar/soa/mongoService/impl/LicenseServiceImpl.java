@@ -9,13 +9,21 @@ import cn.com.jandar.soa.mongoService.LicenseService;
 @Service 
 public class LicenseServiceImpl implements LicenseService{
 
+	@SuppressWarnings("unused")
 	public boolean insertVehicle(String[] args) {
-		if(args.length == 0 && args != null){
-			System.out.println(args);
-			return true;
-		}else{
+		if(args.length == 0){
 			return false;
+		}else{
+			System.out.println("mongo recevice success.");
+			return true;
 		}
+		
+		
+	}
+
+	@Override
+	public void putLicenseIntoQueue(String license, String passDateTime) {
+		System.out.println("license :" + license + ",passDateTime: " + passDateTime);
 		
 	}
 

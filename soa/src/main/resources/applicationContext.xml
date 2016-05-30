@@ -16,24 +16,47 @@
     <bean id="vehicleAlarmSoapImp" class="cn.com.jandar.soa.xwsoa.impl.VehicleAlarmSoapImpl" />
 	<bean id="licenseServiceImpl" class="cn.com.jandar.soa.mongoService.impl.LicenseServiceImpl" />
 	<bean id="HTSAPServerImpl" class="cn.com.jandar.soa.htService.impl.HTSAPServerImpl" />
+	<bean id="recgWebServiceImpl" class="cn.com.jandar.soa.recg.impl.RecgWebServiceImpl" />
 	<!-- 2:通过jaxws:server方式来配置webservice -->
+	<bean id ="licenseInInterceptor" class="cn.com.jandar.interceptor.LicenseInInterceptor"/>
 	<jaxws:server serviceClass="cn.com.jandar.soa.hello.HelloService"
 		address="/sayHello">
 		<jaxws:serviceBean>
 			<ref bean="helloWorldImpl" />
 		</jaxws:serviceBean>
+		<jaxws:inInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
+            <ref bean="licenseInInterceptor"/>  
+        </jaxws:inInterceptors>  
+        <jaxws:outInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
+        </jaxws:outInterceptors>
 	</jaxws:server>
 	<jaxws:server serviceClass="cn.com.jandar.soa.htService.HTSAPServer"
 		address="/login">
 		<jaxws:serviceBean>
 			<ref bean="HTSAPServerImpl" />
 		</jaxws:serviceBean>
+		<jaxws:inInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
+            <ref bean="licenseInInterceptor"/>  
+        </jaxws:inInterceptors>  
+        <jaxws:outInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
+        </jaxws:outInterceptors>
 	</jaxws:server>
 	<jaxws:server serviceClass="cn.com.jandar.soa.mongoService.LicenseService"
 		address="/insertVehicle">
 		<jaxws:serviceBean>
 			<ref bean="licenseServiceImpl" />
 		</jaxws:serviceBean>
+		<jaxws:inInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
+            <ref bean="licenseInInterceptor"/>  
+        </jaxws:inInterceptors>  
+        <jaxws:outInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
+        </jaxws:outInterceptors>
 	</jaxws:server>
     
     <!-- xwsoa -->
@@ -42,6 +65,28 @@
         <jaxws:serviceBean>
             <ref bean="vehicleAlarmSoapImp"/>
         </jaxws:serviceBean>
+        <jaxws:inInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
+            <ref bean="licenseInInterceptor"/>  
+        </jaxws:inInterceptors>  
+        <jaxws:outInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
+        </jaxws:outInterceptors>
+    </jaxws:server>
+    
+    <!-- xwsoa -->
+    <jaxws:server serviceClass="cn.com.jandar.soa.recg.RecgWebService"
+        address="/objectOut">
+        <jaxws:serviceBean>
+            <ref bean="recgWebServiceImpl"/>
+        </jaxws:serviceBean>
+        <jaxws:inInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"/>  
+            <ref bean="licenseInInterceptor"/>  
+        </jaxws:inInterceptors>  
+        <jaxws:outInterceptors>  
+            <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>  
+        </jaxws:outInterceptors>
     </jaxws:server>
     
 </beans> 
